@@ -10,6 +10,7 @@ import { useParams, notFound } from "next/navigation"
 import { useCartStore } from "@/store/useCartStore"
 import { useWishlistStore } from "@/store/useWishlistStore"
 import { getProductById, getRelatedProducts } from "@/lib/products"
+import { useToast } from "@/components/ui/toast"
 
 export default function ProductDetailPage() {
   const params = useParams()
@@ -32,6 +33,7 @@ export default function ProductDetailPage() {
   const addWishlistItem = useWishlistStore((state) => state.addItem)
   const removeWishlistItem = useWishlistStore((state) => state.removeItem)
   const isInWishlist = useWishlistStore((state) => state.isInWishlist(product.id))
+  const { toast } = useToast()
 
   const toggleWishlist = () => {
     if (isInWishlist) {
@@ -45,6 +47,7 @@ export default function ProductDetailPage() {
         category: product.category,
         image: product.images[0]
       })
+      toast(`${product.name} added to wishlist`)
     }
   }
 
@@ -58,6 +61,7 @@ export default function ProductDetailPage() {
       image: product.images[0],
     })
     setAddedToCart(true)
+    toast(`${product.name} added to your bag`)
     setTimeout(() => setAddedToCart(false), 2000)
   }
 

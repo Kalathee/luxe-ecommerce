@@ -11,6 +11,7 @@ import { products } from "@/lib/products"
 import { Suspense, useState, useRef, useEffect } from "react"
 import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/toast"
 
 const categories = ["All", "Accessories", "Bags", "Electronics", "Eyewear", "Apparel", "Home"]
 
@@ -70,6 +71,8 @@ function ShopContent() {
     ? categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1)
     : "All"
 
+  const { toast } = useToast()
+
   const handleQuickAdd = (product: typeof products[0]) => {
     addItem({
       id: product.id,
@@ -79,6 +82,7 @@ function ShopContent() {
       quantity: 1,
       image: product.images[0],
     })
+    toast(`${product.name} added to your bag`)
   }
 
   return (
