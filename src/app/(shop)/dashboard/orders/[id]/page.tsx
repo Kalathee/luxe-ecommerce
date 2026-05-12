@@ -81,10 +81,10 @@ export default async function OrderDetailPage({
                   </div>
                   <div className="flex-1">
                     <h4 className="font-semibold text-sm">{item.product.name}</h4>
-                    <p className="text-xs text-muted-foreground mb-2">{item.product.category}</p>
+                    <p className="text-xs text-muted-foreground mb-2">Category ID: {item.product.categoryId}</p>
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-muted-foreground">Qty: {item.quantity}</span>
-                      <span className="font-bold">${(item.priceCents / 100).toFixed(2)}</span>
+                      <span className="font-bold">${item.price.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
@@ -129,15 +129,15 @@ export default async function OrderDetailPage({
             <div className="space-y-3 text-sm">
               <div className="flex justify-between text-muted-foreground">
                 <span>Subtotal</span>
-                <span>${(order.subtotalAmount / 100).toFixed(2)}</span>
+                <span>${(order.subtotalAmountCents / 100).toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-muted-foreground">
                 <span>Shipping</span>
-                <span>${(order.shippingAmount / 100).toFixed(2)}</span>
+                <span>${(order.shippingAmountCents / 100).toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-muted-foreground">
                 <span>Tax</span>
-                <span>${(order.taxAmount / 100).toFixed(2)}</span>
+                <span>${(order.taxAmountCents / 100).toFixed(2)}</span>
               </div>
               <div className="border-t pt-3 flex justify-between font-bold text-lg">
                 <span>Total</span>
