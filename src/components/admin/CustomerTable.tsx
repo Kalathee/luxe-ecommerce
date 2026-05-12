@@ -10,8 +10,7 @@ import {
   getFilteredRowModel,
   ColumnDef,
 } from "@tanstack/react-table"
-import { Search, UserCircle, Mail, Calendar, DollarSign, ShoppingBag } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Search, Mail, Calendar, DollarSign, ShoppingBag } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { motion } from "framer-motion"
 
@@ -26,7 +25,7 @@ interface Customer {
 }
 
 export function CustomerTable({ initialData }: { initialData: Customer[] }) {
-  const [data, setData] = useState(initialData)
+  const [data] = useState(initialData)
   const [globalFilter, setGlobalFilter] = useState("")
 
   const columns = useMemo<ColumnDef<Customer>[]>(() => [
@@ -87,6 +86,7 @@ export function CustomerTable({ initialData }: { initialData: Customer[] }) {
     },
   ], [])
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,

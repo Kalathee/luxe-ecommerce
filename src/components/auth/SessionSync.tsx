@@ -2,16 +2,8 @@
 
 import { useSession } from "next-auth/react"
 import { useEffect, useRef } from "react"
-import { useRouter } from "next/navigation"
-
-/**
- * SessionSync handles cross-tab session synchronization.
- * It detects if the user has changed in another tab and triggers a refresh
- * to ensure the UI reflects the correct user/role.
- */
 export function SessionSync() {
   const { data: session, status } = useSession()
-  const router = useRouter()
   const lastUserId = useRef<string | undefined>(session?.user?.id)
 
   useEffect(() => {

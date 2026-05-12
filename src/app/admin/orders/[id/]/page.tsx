@@ -2,7 +2,6 @@ import { prisma } from "@/lib/prisma"
 import { notFound } from "next/navigation"
 import { 
   Package, 
-  Truck, 
   CreditCard, 
   User, 
   MapPin, 

@@ -91,6 +91,7 @@ export function AuditTable({ initialData }: { initialData: AuditLog[] }) {
     },
   ], [])
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,

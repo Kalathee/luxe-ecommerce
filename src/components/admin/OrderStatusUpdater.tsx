@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation"
 import { 
   CheckCircle2, 
   Loader2, 
-  ChevronDown,
-  RefreshCcw
+  ChevronDown
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/toast"
@@ -50,8 +49,9 @@ export function OrderStatusUpdater({ orderId, currentStatus }: OrderStatusUpdate
 
       toast(`Order marked as ${newStatus}`)
       router.refresh()
-    } catch (error: any) {
-      toast(error.message, "error")
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Something went wrong"
+      toast(message, "error")
     } finally {
       setLoading(false)
       setIsOpen(false)

@@ -2,15 +2,22 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Save, X, Info, Loader2 } from "lucide-react"
+import { Save, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/toast"
 import { CategoryInput } from "@/lib/validations/admin"
 
+interface Category {
+  id: string
+  name: string
+  slug: string
+  description?: string | null
+}
+
 interface CategoryFormProps {
-  initialData?: any
+  initialData?: Category
 }
 
 export function CategoryForm({ initialData }: CategoryFormProps) {
@@ -55,8 +62,9 @@ export function CategoryForm({ initialData }: CategoryFormProps) {
       toast(initialData ? "Category updated" : "Category created")
       router.push("/admin/categories")
       router.refresh()
-    } catch (error: any) {
-      toast(error.message, "error")
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Something went wrong"
+      toast(message, "error")
     } finally {
       setLoading(false)
     }

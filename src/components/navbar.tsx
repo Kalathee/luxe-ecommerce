@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { ShoppingBag, Search, User, Menu, Heart, X } from "lucide-react"
 import { Button } from "./ui/button"
@@ -10,7 +9,6 @@ import { useState, useRef, useEffect } from "react"
 import { useSession, signOut } from "next-auth/react"
 
 export function Navbar() {
-  const cartItems = useCartStore((state) => state.items)
   const totalItems = useCartStore((state) => state.totalItems)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [accountMenuOpen, setAccountMenuOpen] = useState(false)

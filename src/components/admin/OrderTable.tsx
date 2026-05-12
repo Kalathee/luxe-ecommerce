@@ -97,6 +97,7 @@ export function OrderTable({ initialData }: { initialData: Order[] }) {
     },
   ], [])
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,

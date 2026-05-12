@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma"
-import { Users, Mail, Calendar, ShoppingCart, Shield } from "lucide-react"
+import { Mail, Calendar, ShoppingCart, Shield } from "lucide-react"
 
 async function getCustomers() {
   const customers = await prisma.user.findMany({

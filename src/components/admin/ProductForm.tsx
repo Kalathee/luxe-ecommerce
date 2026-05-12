@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { motion } from "framer-motion"
 import { 
   Save, 
   X, 
@@ -26,8 +25,22 @@ interface Category {
   name: string
 }
 
+interface Product {
+  id: string
+  name: string
+  slug: string
+  description: string
+  price: number
+  compareAt?: number | null
+  inventory: number
+  categoryId: string
+  images: string[]
+  sku?: string | null
+  isActive: boolean
+}
+
 interface ProductFormProps {
-  initialData?: any // Full product object for editing
+  initialData?: Product
 }
 
 export function ProductForm({ initialData }: ProductFormProps) {
@@ -114,8 +127,9 @@ export function ProductForm({ initialData }: ProductFormProps) {
       toast(initialData ? "Product updated successfully" : "Product created successfully")
       router.push("/admin/products")
       router.refresh()
-    } catch (error: any) {
-      toast(error.message, "error")
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Something went wrong"
+      toast(message, "error")
     } finally {
       setLoading(false)
     }
