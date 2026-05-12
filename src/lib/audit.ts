@@ -18,7 +18,7 @@ export interface AuditLogOptions {
   action: AuditAction
   entityType: "PRODUCT" | "ORDER" | "CATEGORY" | "USER" | "SYSTEM"
   entityId: string
-  details?: any
+  details?: unknown
 }
 
 /**

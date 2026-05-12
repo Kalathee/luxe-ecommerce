@@ -10,10 +10,9 @@ import {
   getFilteredRowModel,
   ColumnDef,
 } from "@tanstack/react-table"
-import { Search, Shield, Info, Clock, User, Globe } from "lucide-react"
+import { Search, Shield, Info, Clock, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { motion } from "framer-motion"
 
 interface AuditLog {
   id: string
@@ -27,7 +26,7 @@ interface AuditLog {
 }
 
 export function AuditTable({ initialData }: { initialData: AuditLog[] }) {
-  const [data, setData] = useState(initialData)
+  const [data] = useState(initialData)
   const [globalFilter, setGlobalFilter] = useState("")
 
   const columns = useMemo<ColumnDef<AuditLog>[]>(() => [

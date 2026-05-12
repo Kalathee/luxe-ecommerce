@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { ZodError } from "zod"
 import { prisma } from "@/lib/prisma"
 import { requireAdmin } from "@/lib/rbac"
 import { productSchema } from "@/lib/validations/admin"
@@ -34,7 +35,7 @@ export async function GET(req: Request) {
     })
 
     return NextResponse.json(products)
-  } catch (error) {
+  } catch {
     console.error("Failed to fetch products:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
@@ -55,7 +56,7 @@ export async function POST(req: Request) {
     const product = await prisma.product.create({
       data: {
         ...validatedData,
-        variants: validatedData.variants as any,
+        variants: (validatedData.variants || []) as unknown as string[],
       },
     })
 
@@ -67,8 +68,8 @@ export async function POST(req: Request) {
     })
 
     return NextResponse.json(product)
-  } catch (error: any) {
-    if (error.name === "ZodError") {
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'name' in error && error.name === "ZodError") {
       return NextResponse.json({ error: "Validation failed", details: error.format() }, { status: 400 })
     }
     console.error("Failed to create product:", error)

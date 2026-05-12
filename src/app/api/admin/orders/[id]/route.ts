@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { ZodError } from "zod"
 import { prisma } from "@/lib/prisma"
 import { requireAdmin } from "@/lib/rbac"
 import { orderStatusSchema } from "@/lib/validations/admin"
@@ -30,7 +31,7 @@ export async function GET(
     if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 })
 
     return NextResponse.json(order)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
@@ -73,8 +74,8 @@ export async function PATCH(
     })
 
     return NextResponse.json(order)
-  } catch (error: any) {
-    if (error.name === "ZodError") return NextResponse.json({ error: "Invalid status" }, { status: 400 })
+  } catch (error: unknown) {
+    if (error instanceof ZodError) return NextResponse.json({ error: "Invalid status" }, { status: 400 })
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

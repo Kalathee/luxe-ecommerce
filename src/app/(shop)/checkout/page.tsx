@@ -205,7 +205,7 @@ function SuccessScreen({ orderNumber }: { orderNumber: string }) {
 // Main Checkout Page
 // ──────────────────────────────────────────────────────────────────
 export default function CheckoutPage() {
-  const { data: session, status: authStatus } = useSession()
+  const { status: authStatus } = useSession()
   const items = useCartStore((s) => s.items)
   const router = useRouter()
 
@@ -244,7 +244,7 @@ export default function CheckoutPage() {
   const tax = subtotal * 0.08
 
   // Validate shipping form
-  const validateShipping = (): boolean => {
+  const validateShipping = useCallback((): boolean => {
     const required: (keyof ShippingInfo)[] = [
       "firstName", "lastName", "line1", "city", "state", "zipCode",
     ]
@@ -254,7 +254,7 @@ export default function CheckoutPage() {
     })
     setShippingErrors(errs)
     return Object.keys(errs).length === 0
-  }
+  }, [shipping])
 
   const handleShippingContinue = useCallback(async () => {
     if (!validateShipping()) return
@@ -288,12 +288,12 @@ export default function CheckoutPage() {
         orderNumber: data.orderNumber,
       })
       setStep("payment")
-    } catch (err: any) {
-      setIntentError(err.message)
+    } catch (err: unknown) {
+      setIntentError(err instanceof Error ? err.message : "An unexpected error occurred")
     } finally {
       setLoadingIntent(false)
     }
-  }, [items, shipping])
+  }, [items, shipping, validateShipping])
 
   if (authStatus === "loading") {
     return (

@@ -11,9 +11,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ products: [] })
     }
 
-    // Format query for PostgreSQL full text search (e.g., "leather bag" -> "leather | bag")
-    // Simple split by space and join with | for broad matching
-    const searchTerms = query.trim().split(/\s+/).join(" | ")
+    // Search by name or description using 'contains' for broad matching
 
     const products = await prisma.product.findMany({
       where: {

@@ -94,8 +94,8 @@ export default function RegisterPage() {
 
       router.push("/")
       router.refresh()
-    } catch (error: any) {
-      setErrorMsg(error.message)
+    } catch (error: unknown) {
+      setErrorMsg(error instanceof Error ? error.message : "An unexpected error occurred")
       setIsSubmitting(false)
     }
   }

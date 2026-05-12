@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
+import { Prisma } from "@prisma/client"
 
 // GET /api/products - List all products
 export async function GET(request: Request) {
@@ -12,7 +13,7 @@ export async function GET(request: Request) {
     const page = parseInt(searchParams.get("page") || "1")
     const limit = parseInt(searchParams.get("limit") || "12")
 
-    const where: any = {}
+    const where: Prisma.ProductWhereInput = {}
     if (category) {
       where.category = { name: category }
     }
@@ -43,7 +44,7 @@ export async function GET(request: Request) {
         totalPages: Math.ceil(total / limit),
       },
     })
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to fetch products" },
       { status: 500 }
@@ -72,7 +73,7 @@ export async function POST(request: Request) {
     })
 
     return NextResponse.json(product, { status: 201 })
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to create product" },
       { status: 500 }

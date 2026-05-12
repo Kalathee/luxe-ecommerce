@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma"
 import { z } from "zod"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-08-27.basil" as any,
+  apiVersion: "2025-08-27.basil" as Stripe.StripeConfig["apiVersion"],
 })
 
 const schema = z.object({
@@ -152,10 +152,11 @@ export async function POST(req: Request) {
       shippingCents,
       taxCents,
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal server error"
     console.error("create-payment-intent error:", error)
     return NextResponse.json(
-      { error: error?.message ?? "Internal server error" },
+      { error: message },
       { status: 500 }
     )
   }

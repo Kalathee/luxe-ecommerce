@@ -11,11 +11,9 @@ import {
   ColumnDef,
 } from "@tanstack/react-table"
 import { 
-  MoreHorizontal, 
   ArrowUpDown, 
   Pencil, 
   Trash2, 
-  Archive, 
   ExternalLink,
   Plus,
   Search,
@@ -39,7 +37,7 @@ interface Product {
 }
 
 export function ProductTable({ initialData }: { initialData: Product[] }) {
-  const [data, setData] = useState(initialData)
+  const [data] = useState(initialData)
   const [globalFilter, setGlobalFilter] = useState("")
 
   const columns = useMemo<ColumnDef<Product>[]>(() => [

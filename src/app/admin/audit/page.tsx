@@ -27,7 +27,7 @@ export default async function AdminAuditPage() {
         <p className="text-muted-foreground">Track all administrative actions and system changes.</p>
       </div>
 
-      <AuditTable initialData={logs as any} />
+      <AuditTable initialData={logs} />
     </div>
   )
 }

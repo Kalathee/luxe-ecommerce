@@ -1,9 +1,10 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
-import { motion } from "framer-motion"
-import { Package, Clock, CheckCircle2, ChevronRight, ShoppingBag } from "lucide-react"
+import { Package, ChevronRight, ShoppingBag } from "lucide-react"
 import Link from "next/link"
+
+import Image from "next/image"
 
 const statusColors: Record<string, string> = {
   PENDING: "bg-amber-500/10 text-amber-500",
@@ -41,7 +42,7 @@ export default async function CustomerOrdersPage() {
         <div className="text-center py-20 bg-card border rounded-3xl shadow-sm">
           <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-xl font-semibold mb-2">No orders yet</h3>
-          <p className="text-muted-foreground mb-6">Looks like you haven't placed any orders yet.</p>
+          <p className="text-muted-foreground mb-6">Looks like you haven&apos;t placed any orders yet.</p>
           <Link href="/shop">
             <button className="px-6 py-2 bg-primary text-primary-foreground rounded-full font-medium hover:opacity-90 transition-opacity">
               Start Shopping
@@ -77,9 +78,14 @@ export default async function CustomerOrdersPage() {
               <div className="p-6 space-y-4">
                 {order.items.map((item) => (
                   <div key={item.id} className="flex items-center gap-4">
-                    <div className="h-16 w-12 bg-secondary rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="relative h-16 w-12 bg-secondary rounded-lg overflow-hidden flex-shrink-0">
                       {item.product.images[0] && (
-                        <img src={item.product.images[0]} alt={item.product.name} className="h-full w-full object-cover" />
+                        <Image 
+                          src={item.product.images[0]} 
+                          alt={item.product.name} 
+                          fill
+                          className="object-cover" 
+                        />
                       )}
                     </div>
                     <div className="flex-1 min-w-0">

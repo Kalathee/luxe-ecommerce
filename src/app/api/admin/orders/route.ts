@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { requireAdmin } from "@/lib/rbac"
+import { OrderStatus } from "@prisma/client"
 
 /**
  * GET /api/admin/orders
@@ -16,7 +17,7 @@ export async function GET(req: Request) {
   try {
     const orders = await prisma.order.findMany({
       where: {
-        ...(status ? { status: status as any } : {}),
+        ...(status ? { status: status as OrderStatus } : {}),
         OR: [
           { orderNumber: { contains: search, mode: "insensitive" } },
           { user: { name: { contains: search, mode: "insensitive" } } },
@@ -31,7 +32,7 @@ export async function GET(req: Request) {
     })
 
     return NextResponse.json(orders)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

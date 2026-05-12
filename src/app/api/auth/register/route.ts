@@ -52,22 +52,25 @@ export async function POST(req: Request) {
     })
 
     // Strip the password from the response
-    const { password: _pw, ...userWithoutPassword } = user
+    const userWithoutPassword = { ...user }
+    // @ts-expect-error - removing password property
+    delete userWithoutPassword.password
 
     return NextResponse.json(
       { message: "User registered successfully", user: userWithoutPassword },
       { status: 201 }
     )
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Log the full error for debugging
     console.error("Registration error:", error)
 
     // In development, expose the actual error message so we can debug it
     const isDev = process.env.NODE_ENV === "development"
+    const message = error instanceof Error ? error.message : String(error)
     return NextResponse.json(
       {
         error: "Something went wrong during registration",
-        ...(isDev && { debug: error?.message ?? String(error) }),
+        ...(isDev && { debug: message }),
       },
       { status: 500 }
     )

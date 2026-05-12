@@ -11,13 +11,8 @@ import {
   ColumnDef,
 } from "@tanstack/react-table"
 import { 
-  ArrowUpDown, 
   Eye, 
-  Truck,
-  CheckCircle2,
-  XCircle,
   Search,
-  Filter
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -45,7 +40,7 @@ const statusColors: Record<string, string> = {
 }
 
 export function OrderTable({ initialData }: { initialData: Order[] }) {
-  const [data, setData] = useState(initialData)
+  const [data] = useState(initialData)
   const [globalFilter, setGlobalFilter] = useState("")
 
   const columns = useMemo<ColumnDef<Order>[]>(() => [

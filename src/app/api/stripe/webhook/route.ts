@@ -3,7 +3,7 @@ import Stripe from "stripe"
 import { prisma } from "@/lib/prisma"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-08-27.basil" as any,
+  apiVersion: "2025-08-27.basil" as Stripe.StripeConfig["apiVersion"],
 })
 
 export async function POST(req: Request) {
@@ -17,8 +17,9 @@ export async function POST(req: Request) {
   let event: Stripe.Event
   try {
     event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET)
-  } catch (err: any) {
-    console.error("Webhook signature verification failed:", err.message)
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error"
+    console.error("Webhook signature verification failed:", message)
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 })
   }
 
@@ -79,7 +80,7 @@ export async function POST(req: Request) {
     })
 
     return NextResponse.json({ received: true })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Webhook handler error:", error)
     return NextResponse.json({ error: "Handler failed" }, { status: 500 })
   }

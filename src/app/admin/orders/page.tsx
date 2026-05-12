@@ -27,7 +27,7 @@ export default async function AdminOrdersPage() {
         <p className="text-muted-foreground">Monitor and manage customer orders and shipments.</p>
       </div>
 
-      <OrderTable initialData={orders as any} />
+      <OrderTable initialData={orders} />
     </div>
   )
 }

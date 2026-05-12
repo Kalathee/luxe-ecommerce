@@ -31,7 +31,7 @@ export default async function AdminProductsPage() {
         </div>
       </div>
 
-      <ProductTable initialData={products as any} />
+      <ProductTable initialData={products} />
     </div>
   )
 }

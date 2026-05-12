@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { ZodError } from "zod"
 import { prisma } from "@/lib/prisma"
 import { requireAdmin } from "@/lib/rbac"
 import { productSchema } from "@/lib/validations/admin"
@@ -27,7 +28,7 @@ export async function GET(
     }
 
     return NextResponse.json(product)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
@@ -55,7 +56,7 @@ export async function PUT(
       where: { id },
       data: {
         ...validatedData,
-        variants: validatedData.variants as any,
+        variants: (validatedData.variants || []) as unknown as string[],
       },
     })
 
@@ -67,8 +68,8 @@ export async function PUT(
     })
 
     return NextResponse.json(product)
-  } catch (error: any) {
-    if (error.name === "ZodError") {
+  } catch (error: unknown) {
+    if (error instanceof ZodError) {
       return NextResponse.json({ error: "Validation failed", details: error.format() }, { status: 400 })
     }
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
@@ -101,7 +102,7 @@ export async function DELETE(
     })
 
     return NextResponse.json({ success: true })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
@@ -135,7 +136,7 @@ export async function PATCH(
     })
 
     return NextResponse.json(product)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

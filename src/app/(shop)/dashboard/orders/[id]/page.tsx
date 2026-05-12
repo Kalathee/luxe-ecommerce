@@ -1,18 +1,16 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import { redirect, notFound } from "next/navigation"
-import { motion } from "framer-motion"
 import { 
   ArrowLeft, 
   MapPin, 
-  CreditCard, 
   Truck, 
   Calendar,
   Package,
   CheckCircle2,
-  Clock
 } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 const statusColors: Record<string, string> = {
   PENDING: "bg-amber-500/10 text-amber-500",
@@ -74,9 +72,14 @@ export default async function OrderDetailPage({
             <div className="p-6 divide-y">
               {order.items.map((item) => (
                 <div key={item.id} className="py-4 flex gap-4 first:pt-0 last:pb-0">
-                  <div className="h-20 w-16 bg-secondary rounded-xl overflow-hidden flex-shrink-0">
+                  <div className="relative h-20 w-16 bg-secondary rounded-xl overflow-hidden flex-shrink-0">
                     {item.product.images[0] && (
-                      <img src={item.product.images[0]} alt={item.product.name} className="h-full w-full object-cover" />
+                      <Image 
+                        src={item.product.images[0]} 
+                        alt={item.product.name} 
+                        fill
+                        className="object-cover" 
+                      />
                     )}
                   </div>
                   <div className="flex-1">

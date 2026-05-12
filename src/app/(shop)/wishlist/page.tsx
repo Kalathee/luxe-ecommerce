@@ -16,7 +16,7 @@ export default function WishlistPage() {
   const addItemToCart = useCartStore((state) => state.addItem)
 
   useEffect(() => {
-    setIsClient(true)
+    setIsClient(true) // eslint-disable-line react-hooks/set-state-in-effect
   }, [])
 
   if (!isClient) return null
