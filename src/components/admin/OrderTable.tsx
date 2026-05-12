@@ -24,7 +24,7 @@ interface Order {
   orderNumber: string
   totalAmountCents: number
   status: string
-  user: { name: string; email: string }
+  user: { name: string | null; email: string | null }
   _count: { items: number }
   createdAt: string
 }

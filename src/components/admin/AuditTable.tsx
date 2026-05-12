@@ -20,9 +20,9 @@ interface AuditLog {
   entityType: string
   entityId: string
   details: string | null
-  ipAddress: string
+  ipAddress: string | null
   createdAt: string
-  admin: { name: string; email: string }
+  admin: { name: string | null; email: string | null }
 }
 
 export function AuditTable({ initialData }: { initialData: AuditLog[] }) {

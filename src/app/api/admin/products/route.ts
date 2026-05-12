@@ -35,7 +35,7 @@ export async function GET(req: Request) {
     })
 
     return NextResponse.json(products)
-  } catch {
+  } catch (error) {
     console.error("Failed to fetch products:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
@@ -69,7 +69,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(product)
   } catch (error: unknown) {
-    if (error && typeof error === 'object' && 'name' in error && error.name === "ZodError") {
+    if (error instanceof ZodError) {
       return NextResponse.json({ error: "Validation failed", details: error.format() }, { status: 400 })
     }
     console.error("Failed to create product:", error)
