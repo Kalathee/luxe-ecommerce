@@ -153,9 +153,9 @@ export default async function OrderDetailPage({
             </h3>
             <div className="text-sm text-muted-foreground space-y-1">
               <p className="font-medium text-foreground">{order.shippingAddress?.firstName} {order.shippingAddress?.lastName}</p>
-              <p>{order.shippingAddress?.addressLine1}</p>
-              {order.shippingAddress?.addressLine2 && <p>{order.shippingAddress?.addressLine2}</p>}
-              <p>{order.shippingAddress?.city}, {order.shippingAddress?.state} {order.shippingAddress?.postalCode}</p>
+              <p>{order.shippingAddress?.line1}</p>
+              {order.shippingAddress?.line2 && <p>{order.shippingAddress?.line2}</p>}
+              <p>{order.shippingAddress?.city}, {order.shippingAddress?.state} {order.shippingAddress?.zipCode}</p>
               <p>{order.shippingAddress?.country}</p>
             </div>
           </div>

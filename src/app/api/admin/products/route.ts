@@ -53,7 +53,10 @@ export async function POST(req: Request) {
     const validatedData = productSchema.parse(body)
 
     const product = await prisma.product.create({
-      data: validatedData,
+      data: {
+        ...validatedData,
+        variants: validatedData.variants as any,
+      },
     })
 
     await logAudit({

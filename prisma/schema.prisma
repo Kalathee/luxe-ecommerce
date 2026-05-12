@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -124,6 +125,7 @@ model Order {
   taxAmountCents      Int         @default(0)
   shippingAmountCents Int         @default(0)
   paymentIntentId     String?     @unique
+  paymentMethod       String?
   shippingAddressId   String?
   createdAt           DateTime    @default(now())
   updatedAt           DateTime    @updatedAt

@@ -18,7 +18,7 @@ import { motion } from "framer-motion"
 interface Customer {
   id: string
   name: string
-  email: string
+  email: string | null
   role: string
   orderCount: number
   totalSpent: number
@@ -51,7 +51,7 @@ export function CustomerTable({ initialData }: { initialData: Customer[] }) {
       cell: ({ row }) => (
         <div className="flex items-center gap-2 text-muted-foreground">
           <Mail className="h-3 w-3" />
-          <span>{row.original.email}</span>
+          <span>{row.original.email || "No email"}</span>
         </div>
       ),
     },

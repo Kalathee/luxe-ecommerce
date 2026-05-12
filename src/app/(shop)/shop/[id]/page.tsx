@@ -39,6 +39,7 @@ export default function ProductDetailPage() {
     } else {
       addWishlistItem({
         id: product.id,
+        slug: product.slug,
         name: product.name,
         price: product.price,
         category: product.category,

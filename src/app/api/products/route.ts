@@ -56,9 +56,18 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
     const { name, description, price, images, inventory, categoryId } = body
+    const slug = name.toLowerCase().replace(/ /g, "-") + "-" + Date.now()
 
     const product = await prisma.product.create({
-      data: { name, description, price, images, inventory, categoryId },
+      data: { 
+        name, 
+        slug,
+        description, 
+        price, 
+        images, 
+        inventory, 
+        categoryId 
+      },
       include: { category: true },
     })
 

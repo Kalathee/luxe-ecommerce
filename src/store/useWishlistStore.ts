@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware'
 
 export interface WishlistItem {
   id: string
+  slug: string
   name: string
   price: number | string
   category: string

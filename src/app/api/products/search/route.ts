@@ -21,17 +21,12 @@ export async function GET(request: NextRequest) {
         OR: [
           {
             name: {
-              search: searchTerms,
+              contains: query,
+              mode: "insensitive",
             },
           },
           {
             description: {
-              search: searchTerms,
-            },
-          },
-          // Fallback to basic contains if search doesn't match
-          {
-            name: {
               contains: query,
               mode: "insensitive",
             },

@@ -87,7 +87,7 @@ export default async function CustomerOrdersPage() {
                       <p className="text-xs text-muted-foreground">Qty: {item.quantity}</p>
                     </div>
                     <div className="text-sm font-bold">
-                      ${(item.priceCents / 100).toFixed(2)}
+                      ${item.price.toFixed(2)}
                     </div>
                   </div>
                 ))}

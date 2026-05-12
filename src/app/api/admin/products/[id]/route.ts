@@ -53,7 +53,10 @@ export async function PUT(
 
     const product = await prisma.product.update({
       where: { id },
-      data: validatedData,
+      data: {
+        ...validatedData,
+        variants: validatedData.variants as any,
+      },
     })
 
     await logAudit({

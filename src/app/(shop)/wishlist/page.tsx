@@ -72,6 +72,7 @@ export default function WishlistPage() {
                         e.stopPropagation()
                         addItemToCart({
                           id: item.id,
+                          slug: item.slug,
                           name: item.name,
                           price: typeof item.price === 'string' ? parseFloat(item.price.replace('$', '')) : item.price,
                           quantity: 1,
